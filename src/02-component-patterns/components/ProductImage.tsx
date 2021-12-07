@@ -26,7 +26,7 @@ export const ProductImage = ({ img, className, style}: ProductImageProps) => {
         imgToShow = noImage;
     };
 
-    console.log(className);
+    
 
     return (
         <img 

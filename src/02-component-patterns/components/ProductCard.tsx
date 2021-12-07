@@ -3,7 +3,7 @@ import styles from '../styles/styles.module.css'
 
 import { useProducts } from '../hooks/useProducts';
 import { createContext, ReactElement } from 'react';
-import { Product, ProductContextProps } from '../interfaces/inerfaces';
+import { Product, ProductContextProps, onChangeArgs } from '../interfaces/inerfaces';
 
 
 
@@ -28,20 +28,23 @@ export interface Props {
     product: Product;
     children?: ReactElement | ReactElement[];
     className?: string;
-    style?: React.CSSProperties
+    style?: React.CSSProperties;
+    onChange?: (ars:onChangeArgs) => void;
+    value?: number;
+
 
 };
 
 
 
-export const ProductCard = ({ children, product, className, style }: Props) => {
+export const ProductCard = ({ children, product, className, style, onChange, value }: Props) => {
 
     // const [counter, setCounter] = useState(0);
     //  const increaseBy = (value:number) => {
     //      setCounter( prev => Math.max(prev + value, 0))
     //  }
 
-    const { counter, increaseBy } = useProducts();
+    const { counter, increaseBy } = useProducts({onChange, product, value});
 
 
     return (

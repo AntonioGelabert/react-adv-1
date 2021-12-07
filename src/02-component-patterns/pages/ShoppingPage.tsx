@@ -1,64 +1,99 @@
 import '../styles/customs-styles.css';
 import { ProductButtons, ProductCard, ProductTitle } from '../components';
 import { ProductImage } from '../components/ProductImage';
-import React from 'react'
-import { readBuilderProgram } from 'typescript';
+import { useShoppingCart } from '../hooks/useShoppingCart';
 
-const product = {
-    id: '1',
-    title: 'Coffee Mug - Casrd',
-    img: './coffee-mug.png'
-}
+
+
 
 export const ShoppingPage = () => {
+
+
+    const { products, ShoppingCart, onProductCountChange } = useShoppingCart();
+
+
+
+
+
     return (
         <div>
             <h1>Shoping Store</h1>
             <hr />
             <div style={{
-               display: 'flex',
-               flexDirection: 'row',
-               flexWrap: 'wrap'
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap'
 
 
             }}>
-            <ProductCard product={product} 
-            className="bg-dark"
-             >
-                <ProductCard.Image className="custom-image" />
-                <ProductCard.Title title={'Hola mundo'} className="custom-buttons" />
-                <ProductButtons className="custom-buttons" />
-             </ProductCard>
 
-            <ProductCard product={product}
-             className="bg-dark"
-             >
-                <ProductImage className="custom-image"/>
-                <ProductTitle className="text-white text-bold"/>
-                <ProductButtons className="custom-buttons" />
-             </ProductCard>
-        
-            <ProductCard 
-                product={product}
-                style={
+
+
+
                 {
-                    backgroundColor: '#70D1F8'
-                }
+                    products.map(product => (
+
+                        <ProductCard
+                            product={product}
+                            key={product.id}
+                            className="bg-dark"
+                            onChange={onProductCountChange}
+                            value={ShoppingCart[product.id]?.count || 0}
+                        >
+                            <ProductImage className="custom-image" />
+                            <ProductTitle className="text-white text-bold" />
+                            <ProductButtons className="custom-buttons" />
+                        </ProductCard>)
+
+                    )
+
+
                 }
 
-             >
-                <ProductImage style={{boxShadow: '10px 10px 10px 10px rgba(0,0,0,0.2)'}} />
-                <ProductTitle style={{
-                    fontWeight:'bold',
-                }} />
-                <ProductButtons style={{
-                    display: 'flex',
-                    justifyContent: 'end'
-                }} />
-             </ProductCard>
-        
+            </div>
+            <div className="shoping-cart">
+                {
+                    Object.entries(ShoppingCart).map(([key, product]) => (
 
+
+                        <ProductCard
+                            product={product}
+                            key={product.id}
+                            className="bg-dark"
+                            style={{ width: '100px' }}
+                            onChange={onProductCountChange}
+                            value={product.count}
+                        >
+                            <ProductImage className="custom-image" />
+                            <ProductTitle className="text-white text-bold" />
+                            <ProductButtons
+                                className="custom-buttons"
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center'
+
+                                }}
+                            />
+                        </ProductCard>
+
+
+
+
+                    ))
+                }
+
+
+
+
+            </div>
+            <div>
+                <code>
+                    {JSON.stringify(ShoppingCart, null, 5)}
+                </code>
             </div>
         </div>
     )
+
+
+
 }
