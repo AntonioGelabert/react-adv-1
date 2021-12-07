@@ -14,15 +14,14 @@ import { onChangeArgs, Product } from '../interfaces/inerfaces';
     const [counter, setCounter] = useState(value);
 
     // console.log({value});
-    const isControlled = useRef(!!onChange);
+
 
     // console.log('isControlled', isControlled.current);
 
     
     const increaseBy = (value:number) => {
         
-        if (isControlled.current && onChange)
-         { return onChange({count: value, product})};
+       
 
          
         const newValue= Math.max(counter+value, 0);
